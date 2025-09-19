@@ -25,3 +25,10 @@ Then(/^url should match (.*)$/,async(searchItem)=>{
     // console.log(url)
 
 })
+
+Given(/^home page is opened$/,async()=>{
+    await browser.url('')
+    await browser.setTimeout({implicit: 50000,pageLoad: 30000})
+    await browser.maximizeWindow()
+})
+
