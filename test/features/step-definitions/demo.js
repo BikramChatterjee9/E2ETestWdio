@@ -1,4 +1,4 @@
-import { Given,When,Then } from "@wdio/cucumber-framework";
+import { Given,When,Then} from "@wdio/cucumber-framework";
 
 
 Given(/^google page is opened$/,async()=>{
@@ -27,8 +27,25 @@ Then(/^url should match (.*)$/,async(searchItem)=>{
 })
 
 Given(/^home page is opened$/,async()=>{
-    await browser.url('')
+    await browser.url('/inputs')
     await browser.setTimeout({implicit: 50000,pageLoad: 30000})
     await browser.maximizeWindow()
+})
+
+Then(/^perform web interactions$/,async()=>{
+    const ele = await $("//input[@type='number']")
+    // await ele.setValue("12345")
+    await browser.pause(5000)
+
+    let num=12345
+    let numStr = num.toString()
+
+    await ele.click()
+    for(let i=0;i<numStr.length;i++)
+    {
+        let chars=numStr.charAt(i)
+        await browser.keys(chars)
+        await browser.pause(2000)
+    }
 })
 
