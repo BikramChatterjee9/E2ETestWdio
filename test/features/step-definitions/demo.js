@@ -1,5 +1,7 @@
 import { Given,When,Then} from "@wdio/cucumber-framework";
 
+import { assert } from "chai";
+
 
 Given(/^google page is opened$/,async()=>{
 
@@ -27,25 +29,77 @@ Then(/^url should match (.*)$/,async(searchItem)=>{
 })
 
 Given(/^home page is opened$/,async()=>{
-    await browser.url('/inputs')
+    await browser.url('/checkboxes')
     await browser.setTimeout({implicit: 50000,pageLoad: 30000})
     await browser.maximizeWindow()
 })
 
 Then(/^perform web interactions$/,async()=>{
-    const ele = await $("//input[@type='number']")
-    // await ele.setValue("12345")
-    await browser.pause(5000)
+    // const ele = await $("//input[@type='number']")
+    // // await ele.setValue("12345")
+    // await browser.pause(5000)
 
-    let num=12345
-    let numStr = num.toString()
+    // let num=12345
+    // let numStr = num.toString()
 
-    await ele.click()
-    for(let i=0;i<numStr.length;i++)
+    // await ele.click()
+    // for(let i=0;i<numStr.length;i++)
+    // {
+    //     let chars=numStr.charAt(i)
+    //     await browser.keys(chars)
+    //     await browser.pause(2000)
+    // }
+
+    // let ele = await $("//select/option[@selected='selected']")
+    // console.log('value is = ',await ele.getText())
+
+    // let ddp = await $("//select[@id='dropdown']")
+    // await ddp.selectByVisibleText("Option 2")
+    // await browser.pause(4000)
+    // await ddp.selectByAttribute("value","1")
+    // await browser.pause(4000)
+    // await ddp.selectByIndex(0)
+    // await browser.pause(4000)
+
+    // let allele = await $$("//select[@id='dropdown']/option")
+    // let newarr=[]
+    // for(let i=0;i<allele.length;i++)
+    // {
+    //     let ele=allele[i]
+    //     let val = await ele.getText()
+    //     newarr.push(val)
+    //     console.log(val)
+    // }
+
+    let checkbox1 = await $("//form[@id='checkboxes']/input[1]")
+    // await checkbox1.click()
+    // await browser.pause(3000)
+
+    // let checkbox2 = await $("//form[@id='checkboxes']/input[2]")
+    // await checkbox2.click()
+    // await browser.pause(3000)
+
+    // if(!await checkbox1.isSelected())
+    // {
+    // await checkbox1.click()
+    // await browser.pause(3000)
+    // }
+    // assert.isTrue(await checkbox1.isSelected())
+
+    let allcheck = await $$("//form[@id='checkboxes']/input")
+    for(let i=0;i<allcheck.length;i++)
     {
-        let chars=numStr.charAt(i)
-        await browser.keys(chars)
-        await browser.pause(2000)
+        let ele=allcheck[i]
+        if(await ele.isSelected())
+        {
+            console.log('checkbox is selected ',ele)
+        }
     }
+
+
+
+
+
+    
 })
 
