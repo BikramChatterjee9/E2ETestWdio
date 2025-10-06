@@ -29,7 +29,7 @@ Then(/^url should match (.*)$/,async(searchItem)=>{
 })
 
 Given(/^home page is opened$/,async()=>{
-    await browser.url('/checkboxes')
+    await browser.url('/frames')
     await browser.setTimeout({implicit: 50000,pageLoad: 30000})
     await browser.maximizeWindow()
 })
@@ -71,7 +71,7 @@ Then(/^perform web interactions$/,async()=>{
     //     console.log(val)
     // }
 
-    let checkbox1 = await $("//form[@id='checkboxes']/input[1]")
+    // let checkbox1 = await $("//form[@id='checkboxes']/input[1]")
     // await checkbox1.click()
     // await browser.pause(3000)
 
@@ -86,15 +86,79 @@ Then(/^perform web interactions$/,async()=>{
     // }
     // assert.isTrue(await checkbox1.isSelected())
 
-    let allcheck = await $$("//form[@id='checkboxes']/input")
-    for(let i=0;i<allcheck.length;i++)
-    {
-        let ele=allcheck[i]
-        if(await ele.isSelected())
-        {
-            console.log('checkbox is selected ',ele)
-        }
-    }
+    // let allcheck = await $$("//form[@id='checkboxes']/input")
+    // for(let i=0;i<allcheck.length;i++)
+    // {
+    //     let ele=allcheck[i]
+    //     if(await ele.isSelected())
+    //     {
+    //         console.log('checkbox is selected ',ele)
+    //     }
+    // }
+
+    // const parentWin = await browser.getWindowHandle()
+    // await $('*=Click Here').click()
+    // await $('*=Elemental Selenium').click()
+    // console.log(await browser.getTitle())
+
+    // let currentTitle = await browser.getTitle()
+
+    // let winHandle = await browser.getWindowHandles()
+    // for(let i=0;i<winHandle.length;i++)
+    // {
+    //     console.log('--->',winHandle[i])
+    //     await browser.switchToWindow(winHandle[i])
+    //     currentTitle= await browser.getTitle()
+    //     if(currentTitle==='Home | Elemental Selenium')
+    //     {
+    //         await browser.switchToWindow(winHandle[i])
+    //         console.log('New title ', await browser.getTitle())
+    //     }
+    // }
+
+    // await browser.switchToWindow(parentWin)
+    // console.log('final title - ',await browser.getTitle())
+
+    // await $("//button[@onclick='jsAlert()']").click()
+    // if(await browser.isAlertOpen())
+    // {
+    //     console.log(await browser.getAlertText())
+    //     await browser.acceptAlert()
+    // }
+
+    // await $("//button[@onclick='jsConfirm()']").click()
+    // if(await browser.isAlertOpen())
+    // {
+    //     console.log(await browser.getAlertText())
+    //     await browser.dismissAlert()
+    // }
+    
+    // await $("//button[@onclick='jsPrompt()']").click()
+    // if(await browser.isAlertOpen())
+    // {
+    //     console.log(await browser.getAlertText())
+    //     await browser.sendAlertText('Hello')
+    // }
+
+    // console.log(process.cwd());
+
+    // await $("//input[@id='file-upload']").addValue(`${process.cwd()}/data/fileUpload/demo.txt`)
+
+    // await $("//input[@id='file-submit']").click
+
+    // await browser.pause(5000)
+
+    await $('*=iFrame').click()
+
+    let ele = await $("//iframe[@id='mce_0_ifr']")
+
+    await browser.switchToFrame(ele)
+
+    //interact with frame element
+
+    await browser.switchToParentFrame()
+
+    
 
 
 
