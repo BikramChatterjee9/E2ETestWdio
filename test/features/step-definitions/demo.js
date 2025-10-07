@@ -29,7 +29,7 @@ Then(/^url should match (.*)$/,async(searchItem)=>{
 })
 
 Given(/^home page is opened$/,async()=>{
-    await browser.url('/frames')
+    await browser.url('https://the-internet.herokuapp.com/tables')
     await browser.setTimeout({implicit: 50000,pageLoad: 30000})
     await browser.maximizeWindow()
 })
@@ -148,15 +148,53 @@ Then(/^perform web interactions$/,async()=>{
 
     // await browser.pause(5000)
 
-    await $('*=iFrame').click()
+    // await $('*=iFrame').click()
 
-    let ele = await $("//iframe[@id='mce_0_ifr']")
+    // let ele = await $("//iframe[@id='mce_0_ifr']")
 
-    await browser.switchToFrame(ele)
+    // await browser.switchToFrame(ele)
 
-    //interact with frame element
+    // //interact with frame element
 
-    await browser.switchToParentFrame()
+    // await browser.switchToParentFrame()
+
+    // await browser.keys(["META","A"])
+
+    // await browser.keys("Delete")
+
+    let rowCount = await $$("//table[@id='table1']/tbody/tr").length
+    console.log('No of rows ', await rowCount)
+
+    let columnCount = await $$("//table[@id='table1']/thead/tr/th").length
+    console.log('No of columns ',await columnCount)
+
+    let arr=[]
+
+    for(let i=0;i<rowCount;i++)
+    {
+        let PersonObj={
+            lastName:"",
+            firstName:"",
+            email:"",
+            due:"",
+            action:""
+        }
+
+        for(let j=0;j<columnCount;j++)
+        {
+            let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
+            console.log(value)
+            if(j===0) PersonObj.lastName=value
+            if(j===1) PersonObj.firstName=value
+            if(j===2) PersonObj.email=value
+            if(j===3) PersonObj.due=value
+            if(j===4) PersonObj.action=value
+        }
+        arr.push(PersonObj)
+    }
+    console.log(JSON.stringify(arr))
+
+
 
     
 
