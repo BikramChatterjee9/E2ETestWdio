@@ -21,7 +21,7 @@ export const config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './test/features/**/demoInteraction.feature'
+        './test/features/**/webtableInteraction.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -50,7 +50,10 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        "goog:chromeOptions":{
+            args:["--headless"]
+        }
     }],
 
     //

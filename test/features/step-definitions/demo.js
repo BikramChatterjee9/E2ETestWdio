@@ -32,6 +32,16 @@ Given(/^home page is opened$/,async()=>{
     await browser.url('https://the-internet.herokuapp.com/tables')
     await browser.setTimeout({implicit: 50000,pageLoad: 30000})
     await browser.maximizeWindow()
+    console.log(`BrowerObj ${JSON.stringify(browser)}`)
+    
+    // await browser.waitUntil(async function(){
+    //     return await browser.getTitle()==="The Internet"
+    // },{timeout:20000,interval:500,timeoutMsg:`Page Title not displayed ${await browser.getTitle()}`})
+
+    await browser.waitUntil(async function(){
+        return await $("").isDisplayed()
+    },{timeout:20000,interval:500,timeoutMsg:`Page Title not displayed ${await browser.getTitle()}`})
+
 })
 
 Then(/^perform web interactions$/,async()=>{
@@ -168,31 +178,105 @@ Then(/^perform web interactions$/,async()=>{
     let columnCount = await $$("//table[@id='table1']/thead/tr/th").length
     console.log('No of columns ',await columnCount)
 
-    let arr=[]
+    // let arr=[]
 
+    // for(let i=0;i<rowCount;i++)
+    // {
+    //     let PersonObj={
+    //         lastName:"",
+    //         firstName:"",
+    //         email:"",
+    //         due:"",
+    //         action:""
+    //     }
+
+    //     for(let j=0;j<columnCount;j++)
+    //     {
+    //         let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
+    //         console.log(value)
+    //         if(j===0) PersonObj.lastName=value
+    //         if(j===1) PersonObj.firstName=value
+    //         if(j===2) PersonObj.email=value
+    //         if(j===3) PersonObj.due=value
+    //         if(j===4) PersonObj.action=value
+    //     }
+    //     arr.push(PersonObj)
+    // }
+    // console.log(JSON.stringify(arr))
+
+    // let arr=[]
+
+    // for(let i=0;i<rowCount;i++)
+    // {
+    //     let PersonObj={
+    //         lastName:"",
+    //         firstName:"",
+    //         email:"",
+    //         due:"",
+    //         action:""
+    //     }
+
+    //     for(let j=0;j<columnCount;j++)
+    //     {
+    //         let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
+    //         let firstName = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[2]`).getText()
+    //         if(firstName==="Jason")
+    //         {
+    //         console.log(value)
+    //         if(j===0) PersonObj.lastName=value
+    //         if(j===1) PersonObj.firstName=value
+    //         if(j===2) PersonObj.email=value
+    //         if(j===3) PersonObj.due=value
+    //         if(j===4) PersonObj.action=value
+    //         }
+    //     }
+    //     if(PersonObj.firstName)
+    //     {
+    //         arr.push(PersonObj)
+    //     }
+        
+    // }
+    // console.log(JSON.stringify(arr))
+
+    // let arr=[]
+    // for(let i=0;i<rowCount;i++)
+    // {
+    //     let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[4]`).getText()
+    //     arr.push(value)
+    // }
+    // console.log(arr)
+
+    //  let arr=[]
+    // for(let i=0;i<rowCount;i++)
+    // {
+    //     for(let j=0;j<columnCount;j++)
+    //     {
+    //         let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
+    //         let priceValue = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[4]`).getText()
+    //         let firstName = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[2]`).getText()
+    //         if(+(priceValue.replace("$",""))>50)
+    //         {
+    //             arr.push(firstName)
+    //         }
+    //     }
+    // }
+    // console.log(arr)
+
+         let arr=[]
     for(let i=0;i<rowCount;i++)
     {
-        let PersonObj={
-            lastName:"",
-            firstName:"",
-            email:"",
-            due:"",
-            action:""
-        }
-
-        for(let j=0;j<columnCount;j++)
-        {
-            let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
-            console.log(value)
-            if(j===0) PersonObj.lastName=value
-            if(j===1) PersonObj.firstName=value
-            if(j===2) PersonObj.email=value
-            if(j===3) PersonObj.due=value
-            if(j===4) PersonObj.action=value
-        }
-        arr.push(PersonObj)
+        // for(let j=0;j<columnCount;j++)
+        // {
+            // let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
+            let priceValue = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[4]`).getText()
+            let firstName = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[2]`).getText()
+            if(+(priceValue.replace("$",""))>50)
+            {
+                arr.push(firstName)
+            }
+        // }
     }
-    console.log(JSON.stringify(arr))
+    console.log(arr)
 
 
 

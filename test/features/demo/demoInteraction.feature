@@ -5,7 +5,6 @@ Feature: Sample Feature
     Given home page is opened
     And perform web interactions
     
-
     Examples:
       | TestcaseID | 
       | Demo_TC02  | 
