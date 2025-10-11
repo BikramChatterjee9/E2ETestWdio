@@ -1,3 +1,8 @@
+import dotenv from "dotenv"
+dotenv.config()
+
+let debug=process.env.DEBUG
+
 export const config = {
     //
     // ====================
@@ -50,10 +55,9 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
+         maxInstances: 5,
         browserName: 'chrome',
-        "goog:chromeOptions":{
-            args:["--headless"]
-        }
+        
     }],
 
     //
