@@ -1,9 +1,10 @@
 import { Given,When,Then } from "@wdio/cucumber-framework";
 
 Then(/^Inventory page should show (.*) product$/,async(noOfProducts)=>{
+    // console.log(`App id is ${this.appid}`)
     const eleArr = await $$("//div[@class='inventory_item_name']")
     console.log('no of elements - > ',eleArr.length)
-    await browser.debug()
+    // await browser.debug()
 })
 
 Then(/^Product price should be more than 200$/,async()=>{

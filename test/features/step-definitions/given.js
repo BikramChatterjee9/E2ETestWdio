@@ -1,4 +1,5 @@
 import { Given,When,Then } from "@wdio/cucumber-framework";
+import logger from "../../helper/logger";
 
 
 // Given(/^Login to inventory webapp$/,async()=>{
@@ -31,16 +32,25 @@ import { Given,When,Then } from "@wdio/cucumber-framework";
 
 // })
 
-Given(/^As (a|an) (.*) user Login to inventory webapp$/,async(prefixTxt,username)=>{
+Given(/^As (a|an) (.*) user Login to inventory webapp$/,async(prefixTxt,username,dataTable)=>{
    console.log(`Test user is ${process.env.TEST_USERNAME}`)
+   logger.info(`Starting test `)
+   
+//    await browser.url(browser.config.sauceurl) 
+    let dt=dataTable.hashes()
+    console.log(`type of datatable is ${typeof dt.constructor}`)
+    console.log(`actual value is ${JSON.stringify(dt)}`)
     await browser.url('https://www.saucedemo.com/v1/index.html')
     await browser.setTimeout({implicit: 50000,pageLoad: 30000})
     await browser.maximizeWindow()
-    await $("//input[@id='user-name']").setValue(process.env.TEST_USERNAME)
+    await $("//input[@id='user-name']").setValue(dt[0].Username)
+    // await $("//input[@id='user-name']").setValue(process.env.TEST_USERNAME)
     await $("//input[@id='password']").setValue(process.env.TEST_PASSWORD)
     await $("//input[@id='login-button']").click()
     
     await browser.back()
     await browser.forward()
+
+    // this.appid="ABC123"
 
 })

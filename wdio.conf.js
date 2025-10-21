@@ -1,7 +1,10 @@
 import dotenv from "dotenv"
+import allure from "@wdio/allure-reporter"
+import fs from "fs"
+
 dotenv.config()
 
-let debug=process.env.DEBUG
+// let debug=process.env.DEBUG
 
 export const config = {
     //
@@ -130,7 +133,10 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['spec',['allure',{outputDir:'allure-results',
+        disableWebdriverScreenshotsReporting:true,
+        useCucumberStepReporter:true
+    }]],
 
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -174,8 +180,11 @@ export const config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        if(process.env.RUNNER==='local' && fs.existsSync('./allure-results')){
+            fs.rmdirSync("./allure-results",{recursive:true})
+        }
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -237,8 +246,11 @@ export const config = {
      * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
      * @param {object}                 context  Cucumber World object
      */
-    // beforeScenario: function (world, context) {
-    // },
+    beforeScenario: function (world, context) {
+        console.log(`world object is ${JSON.stringify(world)}`)
+        let arr = world.pickle.name.split(/:/)
+        if(arr.length>0) browser.config.testid = arr[0]
+    },
     /**
      *
      * Runs before a Cucumber Step.
@@ -259,8 +271,16 @@ export const config = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {object}             context          Cucumber World object
      */
-    // afterStep: function (step, scenario, result, context) {
-    // },
+    afterStep: async function (step, scenario, result, context) {
+        console.log(`step is ${JSON.stringify(step)}`)
+        console.log(`scenario is ${JSON.stringify(scenario)}`)
+        console.log(`result is ${JSON.stringify(result)}`)
+        console.log(`context is ${JSON.stringify(context)}`)
+        if(result.passed)
+        {
+            await browser.takeScreenshot()
+        }
+    },
     /**
      *
      * Runs after a Cucumber Scenario.
@@ -279,8 +299,9 @@ export const config = {
      * @param {string}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // afterFeature: function (uri, feature) {
-    // },
+    afterFeature: function (uri, feature) {
+        allure.addEnvironment("Environment is", browser.config.environment)
+    },
     
     /**
      * Runs after a WebdriverIO command gets executed
