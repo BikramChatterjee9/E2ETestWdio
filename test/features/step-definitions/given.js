@@ -1,5 +1,6 @@
 import { Given,When,Then } from "@wdio/cucumber-framework";
 import logger from "../../helper/logger";
+import constants from "../../data/constants.json";
 
 
 // Given(/^Login to inventory webapp$/,async()=>{
@@ -52,5 +53,18 @@ Given(/^As (a|an) (.*) user Login to inventory webapp$/,async(prefixTxt,username
     await browser.forward()
 
     // this.appid="ABC123"
+
+})
+
+Given(/^Get list of (.*) from reqres.in$/,async(endPointRef)=>{
+    if(!endPointRef) throw Error(`end point is not correct ${endPointRef}`)
+    let endPoint=""
+    if(endPoint.trim().toUpperCase==="USERS"){
+        endPoint = constants.REQRES.GET_USER
+    }
+
+    if(!endPoint) throw Error(`error getting endpoint ${endPoint}`)
+        
+
 
 })

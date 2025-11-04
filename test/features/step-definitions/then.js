@@ -30,4 +30,8 @@ Then(/^Product price should be more than 200$/,async()=>{
     
 })
 
+Then(/^Verify if all users exist in customers list$/,async()=>{
+    
+})
+
 

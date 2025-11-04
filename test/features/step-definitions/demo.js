@@ -2,6 +2,8 @@ import { Given,When,Then} from "@wdio/cucumber-framework";
 
 import { assert } from "chai";
 
+import sauceHomePage from "../../page-objects/sauce.home.page";
+
 
 Given(/^google page is opened$/,async()=>{
 
@@ -262,21 +264,36 @@ Then(/^perform web interactions$/,async()=>{
     // }
     // console.log(arr)
 
-         let arr=[]
-    for(let i=0;i<rowCount;i++)
-    {
-        // for(let j=0;j<columnCount;j++)
-        // {
-            // let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
-            let priceValue = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[4]`).getText()
-            let firstName = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[2]`).getText()
-            if(+(priceValue.replace("$",""))>50)
-            {
-                arr.push(firstName)
-            }
-        // }
+    //      let arr=[]
+    // for(let i=0;i<rowCount;i++)
+    // {
+    //     // for(let j=0;j<columnCount;j++)
+    //     // {
+    //         // let value = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[${j+1}]`).getText()
+    //         let priceValue = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[4]`).getText()
+    //         let firstName = await $(`//table[@id='table1']/tbody/tr[${i+1}]/td[2]`).getText()
+    //         if(+(priceValue.replace("$",""))>50)
+    //         {
+    //             arr.push(firstName)
+    //         }
+    //     // }
+    // }
+    // console.log(arr)
+
+    try{
+    await sauceHomePage.navigateTo('')
+    await sauceHomePage.enterUsername()
+    await sauceHomePage.enterPassword()
+    await sauceHomePage.clickOnLoginBtn()
     }
-    console.log(arr)
+    catch(err)
+    {
+        err.message = `${this.testId}: error at step ${err.message}`
+        throw err
+    }
+
+
+
 
 
 
